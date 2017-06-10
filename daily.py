@@ -26,9 +26,9 @@ else:
     ssl._create_default_https_context = _create_unverified_https_context
 
 
-headers = {'''user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6)
-           AppleWebKit/537.36 (KHTML, like Gecko)
-           Chrome/53.0.2785.143 Safari/537.36'''}
+headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6)\
+           AppleWebKit/537.36 (KHTML, like Gecko)\
+           Chrome/53.0.2785.143 Safari/537.36'}
 # time.sleep(2)
 
 
@@ -40,7 +40,9 @@ class MyFrame():
         self.OnEnter()
 
     def OnEnter(self):
+        # put = 'play oxygen from kavan' # self.txt.GetValue()
         put = '' # self.txt.GetValue()
+        # put = 'open github' # self.txt.GetValue()
         put = put.lower()
         link = put.split()
         if put == '':
@@ -64,7 +66,7 @@ class MyFrame():
 # Open a webpage
         if put.startswith('open '):
             try:
-                speak.Speak("opening "+link[1])
+                # speak.Speak("opening "+link[1])
                 webbrowser.open('http://www.'+link[1]+'.com')
             except:
                 print('Sorry, No Internet Connection!')
@@ -75,15 +77,17 @@ class MyFrame():
                 link = '+'.join(link[1:])
                 say = link.replace('+', ' ')
                 url = 'https://www.youtube.com/results?search_query='+link
+                print(url)
                 source_code = requests.get(url, headers=headers, timeout=15)
                 plain_text = source_code.text
                 soup = BeautifulSoup(plain_text, "html.parser")
                 songs = soup.findAll('div', {'class': 'yt-lockup-video'})
                 song = songs[0].contents[0].contents[0].contents[0]
                 hit = song['href']
-                speak.Speak("playing "+say)
+                # speak.Speak("playing "+say)
                 webbrowser.open('https://www.youtube.com'+hit)
-            except:
+            except Exception,e:
+                print str(e)
                 print('Sorry, No internet connection!')
                 
 # Google Search
