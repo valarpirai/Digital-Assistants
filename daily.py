@@ -1,18 +1,16 @@
-import wx
+#!/usr/bin/env python
+
 import os
 # os.environ["HTTPS_PROXY"] = "http://username:pass@192.168.1.107:3128"
-import wikipedia
 import wolframalpha
 import time
 import webbrowser
-import winshell
 import json
 import requests
 import ctypes
 import random
 from bs4 import BeautifulSoup
-import win32com.client as wincl
-from urllib.request import urlopen
+# from urllib.request import urlopen
 import speech_recognition as sr
 import ssl
 # Remove SSL error
@@ -31,39 +29,18 @@ else:
 headers = {'''user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6)
            AppleWebKit/537.36 (KHTML, like Gecko)
            Chrome/53.0.2785.143 Safari/537.36'''}
-speak = wincl.Dispatch("SAPI.SpVoice")
 # time.sleep(2)
 
 
 # GUI creation
-class MyFrame(wx.Frame):
+class MyFrame():
     def __init__(self):
-        wx.Frame.__init__(self, None,
-                          pos=wx.DefaultPosition, size=wx.Size(450, 100),
-                          style=wx.MINIMIZE_BOX | wx.SYSTEM_MENU | wx.CAPTION |
-                          wx.CLOSE_BOX | wx.CLIP_CHILDREN,
-                          title="BRUNO")
-        panel = wx.Panel(self)
+        # self.txt.Bind(wx.EVT_TEXT_ENTER, self.OnEnter)
+        # speak.Speak('''Welcome back Sir, Broono at your service.''')
+        self.OnEnter()
 
-        ico = wx.Icon('boy.ico', wx.BITMAP_TYPE_ICO)
-        self.SetIcon(ico)
-
-        my_sizer = wx.BoxSizer(wx.VERTICAL)
-        lbl = wx.StaticText(panel,
-                            label="Bienvenido Sir. How can I help you?")
-        my_sizer.Add(lbl, 0, wx.ALL, 5)
-        self.txt = wx.TextCtrl(panel, style=wx.TE_PROCESS_ENTER,
-                               size=(400, 30))
-        self.txt.SetFocus()
-        self.txt.Bind(wx.EVT_TEXT_ENTER, self.OnEnter)
-        my_sizer.Add(self.txt, 0, wx.ALL, 5)
-        panel.SetSizer(my_sizer)
-        self.Show()
-        speak.Speak('''Welcome back Sir, Broono at your service.''')
-
-
-    def OnEnter(self, event):
-        put = self.txt.GetValue()
+    def OnEnter(self):
+        put = '' # self.txt.GetValue()
         put = put.lower()
         link = put.split()
         if put == '':
@@ -120,73 +97,6 @@ class MyFrame(wx.Frame):
             except:
                 print('Sorry, No internet connection!')
 
-# Empty Recycle bin
-        if put.startswith('empty '):
-            try:
-                winshell.recycle_bin().empty(confirm=False,
-                                             show_progress=False, sound=True)
-                print("Recycle Bin Empty!!")
-            except:
-                print("Unknown Error")
-
-# News
-        if put.startswith('science '):
-            try:
-                jsonObj = urlopen('''https://newsapi.org/v1/articles?source=new-scientist&sortBy=top&apiKey=YOUR_API_KEY''')
-                data = json.load(jsonObj)
-                i = 1
-                speak.Speak('''Here are some top science
-                             news from new scientist''')
-                print('''             ================NEW SCIENTIST=============
-                      '''+'\n')
-                for item in data['articles']:
-                    print(str(i)+'. '+item['title']+'\n')
-                    print(item['description']+'\n')
-                    i += 1
-            except:
-                print('Sorry, No internet connection')
-
-        if put.startswith('headlines '):
-            try:
-                jsonObj = urlopen('''https://newsapi.org/v1/articles?source=the-times-of-india&sortBy=top&apiKey=YOUR_API_KEY''')
-                data = json.load(jsonObj)
-                i = 1
-                speak.Speak('here are some top news from the times of india')
-                print('''             ===============TIMES OF INDIA============'''
-                +'\n')
-                for item in data['articles']:
-                    print(str(i)+'. '+item['title']+'\n')
-                    print(item['description']+'\n')
-                    i += 1
-            except Exception as e:
-                print(str(e))
-
-# Lock the device
-        if put.startswith('lock '):
-            try:
-                speak.Speak("locking the device")
-                ctypes.windll.user32.LockWorkStation()
-            except Exception as e:
-                print(str(e))
-
-# Play videos in boredom
-        videos = ['Videos\\1.mp4', 'Videos\\2.mp4',
-                  'Videos\\3.mp4', 'Videos\\4.mp4',
-                  'Videos\\5.mp4', 'Videos\\6.mp4',
-                  'Videos\\7.mp4']
-
-        if put.endswith('bored'):
-            try:
-                speak.Speak('''Sir, I\'m playing a dance video.
-                            Hope you like it''')
-                song = random.choice(videos)
-                os.startfile(song)
-            except Exception as e:
-                print(str(e))
-
-
 # Trigger GUI
 if __name__ == "__main__":
-        app = wx.App(True)
         frame = MyFrame()
-        app.MainLoop()
