@@ -1,0 +1,14 @@
+beautifulsoup4==4.6.0
+certifi==2017.4.17
+chardet==3.0.4
+idna==2.5
+inflect==0.2.5
+jaraco.itertools==2.0.1
+more-itertools==3.1.0
+requests==2.17.3
+six==1.10.0
+SpeechRecognition==3.6.5
+urllib3==1.21.1
+wikipedia==1.4.0
+wolframalpha==3.0
+xmltodict==0.11.0
