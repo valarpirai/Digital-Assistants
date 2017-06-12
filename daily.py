@@ -32,15 +32,6 @@ headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6)\
            AppleWebKit/537.36 (KHTML, like Gecko)\
            Chrome/53.0.2785.143 Safari/537.36'}
 
-
-# Requirements
-videos = ['Videos\\1.mp4', 'Videos\\2.mp4',
-          'Videos\\3.mp4', 'Videos\\4.mp4',
-          'Videos\\5.mp4', 'Videos\\6.mp4',
-          'Videos\\7.mp4']
-app_id = 'wolfram_API_here'
-
-
 # GUI creation
 class MyFrame(wx.Frame):
     def __init__(self):
