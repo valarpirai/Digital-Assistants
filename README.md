@@ -24,6 +24,7 @@ Automating the daily stuffs
 4. Get the WOLFRAM API from here : [Wolfram](https://developer.wolframalpha.com/portal/signup.html)
 5. Place the APIs at the right postition and run the program.
 
+### For installing pyaudio, install PortAudio
 
 ## Features present and accessing them:
 1. Google search
