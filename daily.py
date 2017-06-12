@@ -41,11 +41,12 @@ class MyFrame(wx.Frame):
             self.OnEnter()
 
     def OnEnter(self):
-        print("Listening for command")
-        put = '' # self.txt.GetValue()
+        print("\nWaiting for command......")
+        put = input('** Enter command :') # self.txt.GetValue()
         put = put.lower()
         link = put.split()
         if put == '':
+            print("Speak now...")
             r = sr.Recognizer()
             with sr.Microphone() as src:
                 audio = r.listen(src)
@@ -54,8 +55,7 @@ class MyFrame(wx.Frame):
                 put = put.lower()
                 link = put.split()
                 # self.txt.SetValue(put)
-                print("Command : ")
-                print(put)
+                print("Command: ", put)
 
             except sr.UnknownValueError:
                 print("Google Speech Recognition could not understand audio")
@@ -83,7 +83,7 @@ class MyFrame(wx.Frame):
                 source_code = requests.get(url, headers=headers, timeout=15)
                 plain_text = source_code.text
                 soup = BeautifulSoup(plain_text, "html.parser")
-                songs = soup.findAll('div', {'class': 'yt-lockup-video'})
+                songs = soup.findAll('div', {'class': 'yt-lockup-tile'}) # yt-lockup-video
                 song = songs[0].contents[0].contents[0].contents[0]
                 hit = song['href']
                 print("playing "+say)
@@ -137,8 +137,8 @@ class MyFrame(wx.Frame):
                 print(str(e))
 
 # # Other Cases
-#         else:
-#             pass
+        else:
+            print("###### Unknown command :", put)
 #             try:
 #                 # wolframalpha
 #                 client = wolframalpha.Client(app_id)
